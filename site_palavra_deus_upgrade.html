@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Palavra do Céu ✨</title>
+<style>
+body{margin:0;font-family:Arial,sans-serif;background:linear-gradient(#0f172a,#111827,#020617);color:#fff;height:100vh;display:flex;justify-content:center;align-items:center;overflow:hidden}
+.card{width:92%;max-width:950px;background:rgba(255,255,255,.08);backdrop-filter:blur(18px);padding:50px;border-radius:30px;text-align:center;border:1px solid rgba(255,255,255,.12)}
+h1{font-size:2.8rem} p{font-size:1.1rem;line-height:1.8}
+button{padding:18px 34px;border:none;border-radius:999px;cursor:pointer;font-size:1rem;font-weight:bold;color:#fff;background:linear-gradient(90deg,#f59e0b,#3b82f6,#22c55e);background-size:300% 300%;animation:grad 6s infinite}
+@keyframes grad{0%{background-position:0%}50%{background-position:100%}100%{background-position:0%}}
+#verso{display:none}.box{margin:25px auto;padding:25px;background:rgba(255,255,255,.06);border-radius:20px;min-height:120px}
+</style>
+</head>
+<body>
+<div class="card">
+<div id="home">
+<h1>🎁 Você ganhou um presente</h1>
+<p>Toque abaixo e <b>receba uma Palavra de Deus para sua vida.</b></p>
+<button onclick="buscar()">✨ TOQUE AQUI ✨</button>
+</div>
+
+<div id="verso">
+<h1>📖 Palavra para sua vida</h1>
+<div class="box" id="saida">Buscando...</div>
+<button onclick="buscar()">Receber outra Palavra ✨</button>
+<p style="opacity:.7;font-size:.9rem">Com som suave ao revelar a Palavra.</p>
+</div>
+</div>
+
+<audio id="som" preload="auto">
+<source src="https://assets.mixkit.co/active_storage/sfx/2018/2018-preview.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const books={"Gênesis":50,"Êxodo":40,"Levítico":27,"Números":36,"Deuteronômio":34,"Josué":24,"Juízes":21,"Rute":4,"1 Samuel":31,"2 Samuel":24,"1 Reis":22,"2 Reis":25,"Salmos":150,"Provérbios":31,"Isaías":66,"Mateus":28,"Marcos":16,"Lucas":24,"João":21,"Romanos":16,"Apocalipse":22};
+
+async function buscar(){
+document.getElementById('home').style.display='none';
+document.getElementById('verso').style.display='block';
+document.getElementById('saida').innerHTML='⏳ Buscando sua Palavra...';
+
+try{
+const arr=Object.keys(books);
+const book=arr[Math.floor(Math.random()*arr.length)];
+const chapter=Math.floor(Math.random()*books[book])+1;
+
+const r=await fetch(`https://bible-api.com/${encodeURIComponent(book+" "+chapter)}?translation=almeida`);
+const data=await r.json();
+const v=data.verses[Math.floor(Math.random()*data.verses.length)];
+
+document.getElementById('saida').innerHTML=`<div style="font-size:1.3rem">“${v.text.trim()}”</div><br><b>${v.book_name} ${v.chapter}:${v.verse}</b>`;
+document.getElementById('som').play().catch(()=>{});
+}catch(e){
+document.getElementById('saida').innerHTML='Não foi possível carregar agora.';
+}
+}
+</script>
+</body>
+</html>
