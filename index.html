@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Palavra de Deus para sua vida</title>
+  <meta name="theme-color" content="#064e3b">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Poppins:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg1:#eafff3;
+      --bg2:#b7f7cf;
+      --bg3:#0f9f6e;
+      --text:#06392f;
+      --muted:#34675c;
+      --card:rgba(255,255,255,.72);
+      --card2:rgba(255,255,255,.82);
+      --border:rgba(8,120,84,.18);
+      --gold:#c9952c;
+      --btn1:#064e3b;
+      --btn2:#10b981;
+      --btn3:#84cc16;
+      --shadow:0 30px 90px rgba(6,78,59,.20);
+    }
+
+    body.dark{
+      --bg1:#01130e;
+      --bg2:#022c22;
+      --bg3:#064e3b;
+      --text:#ecfdf5;
+      --muted:#b9ead7;
+      --card:rgba(2,44,34,.62);
+      --card2:rgba(6,78,59,.48);
+      --border:rgba(167,243,208,.16);
+      --gold:#facc15;
+      --shadow:0 30px 100px rgba(0,0,0,.55);
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+
+    body{
+      min-height:100vh;
+      font-family:Poppins,Arial,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(34,197,94,.30), transparent 30%),
+        radial-gradient(circle at top right, rgba(250,204,21,.18), transparent 25%),
+        linear-gradient(135deg,var(--bg1),var(--bg2),var(--bg3));
+      overflow-x:hidden;
+      transition:.4s ease;
+    }
+
+    .stars,.stars2{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background-image:radial-gradient(rgba(255,255,255,.85) 1px, transparent 1px);
+      background-size:52px 52px;
+      opacity:.22;
+      animation:moveStars 90s linear infinite;
+      z-index:0;
+    }
+
+    .stars2{
+      background-size:95px 95px;
+      opacity:.13;
+      animation-duration:140s;
+    }
+
+    @keyframes moveStars{
+      from{transform:translateY(0)}
+      to{transform:translateY(-900px)}
+    }
+
+    .glow{
+      position:fixed;
+      width:420px;
+      height:420px;
+      border-radius:50%;
+      background:rgba(34,197,94,.20);
+      filter:blur(85px);
+      top:-120px;
+      left:-90px;
+      animation:floatGlow 7s ease-in-out infinite alternate;
+      pointer-events:none;
+      z-index:0;
+    }
+
+    .glow.two{
+      background:rgba(132,204,22,.18);
+      top:auto;
+      left:auto;
+      right:-120px;
+      bottom:-120px;
+      animation-duration:9s;
+    }
+
+    @keyframes floatGlow{
+      from{transform:translateY(-20px)}
+      to{transform:translateY(28px)}
+    }
+
+    .particles{
+      position:fixed;
+      inset:0;
+      overflow:hidden;
+      pointer-events:none;
+      z-index:1;
+    }
+
+    .particle{
+      position:absolute;
+      width:7px;
+      height:7px;
+      border-radius:50%;
+      background:rgba(255,255,255,.72);
+      box-shadow:0 0 18px rgba(52,211,153,.9);
+      animation:floatUp linear infinite;
+    }
+
+    @keyframes floatUp{
+      0%{transform:translateY(110vh) scale(.45);opacity:0}
+      15%{opacity:.75}
+      100%{transform:translateY(-12vh) scale(1.15);opacity:0}
+    }
+
+    .wrap{
+      min-height:100vh;
+      position:relative;
+      z-index:2;
+      display:grid;
+      place-items:center;
+      padding:18px;
+    }
+
+    .app{
+      width:min(980px,100%);
+      min-height:min(740px,94vh);
+      display:grid;
+      grid-template-rows:auto 1fr auto;
+      border-radius:36px;
+      background:var(--card);
+      border:1px solid var(--border);
+      backdrop-filter:blur(23px);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      animation:appear 1s ease;
+    }
+
+    @keyframes appear{
+      from{opacity:0;transform:translateY(28px) scale(.96)}
+      to{opacity:1;transform:none}
+    }
+
+    header{
+      padding:20px 24px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:14px;
+      border-bottom:1px solid var(--border);
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      font-weight:800;
+    }
+
+    .logo{
+      width:48px;
+      height:48px;
+      border-radius:18px;
+      display:grid;
+      place-items:center;
+      color:white;
+      background:linear-gradient(135deg,#065f46,#10b981,#84cc16);
+      box-shadow:0 12px 28px rgba(4,120,87,.28);
+    }
+
+    .toolbar{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    button{
+      font-family:inherit;
+      border:none;
+      cursor:pointer;
+      -webkit-tap-highlight-color:transparent;
+    }
+
+    .ghost{
+      padding:11px 14px;
+      border-radius:999px;
+      background:rgba(255,255,255,.34);
+      border:1px solid var(--border);
+      color:var(--text);
+      font-weight:800;
+      transition:.22s ease;
+    }
+
+    body.dark .ghost{background:rgba(255,255,255,.07)}
+
+    .ghost:hover,.mainbtn:hover{
+      transform:translateY(-2px) scale(1.02);
+    }
+
+    main{
+      display:grid;
+      place-items:center;
+      text-align:center;
+      padding:42px 26px;
+    }
+
+    .screen{
+      width:min(830px,100%);
+      animation:fade .7s ease;
+    }
+
+    @keyframes fade{
+      from{opacity:0;transform:translateY(18px)}
+      to{opacity:1;transform:none}
+    }
+
+    .hidden{display:none!important}
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      margin-bottom:18px;
+      padding:10px 15px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:rgba(16,185,129,.13);
+      color:#047857;
+      font-weight:800;
+    }
+
+    body.dark .pill{color:#86efac}
+
+    h1{
+      font-family:Cinzel,serif;
+      font-size:clamp(2.25rem,6vw,4.75rem);
+      line-height:1.05;
+      letter-spacing:-.05em;
+      margin-bottom:18px;
+    }
+
+    .lead{
+      max-width:740px;
+      margin:auto;
+      color:var(--muted);
+      font-size:clamp(1rem,2vw,1.22rem);
+      line-height:1.85;
+    }
+
+    .mainbtn{
+      margin-top:34px;
+      padding:18px 32px;
+      border-radius:999px;
+      color:#fff;
+      font-size:1rem;
+      font-weight:900;
+      background:linear-gradient(135deg,var(--btn1),var(--btn2),var(--btn3));
+      box-shadow:0 18px 45px rgba(4,120,87,.30);
+      transition:.22s ease;
+    }
+
+    .versebox{
+      position:relative;
+      margin:24px auto 0;
+      padding:34px;
+      border-radius:30px;
+      background:var(--card2);
+      border:1px solid var(--border);
+      overflow:hidden;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 20px 60px rgba(4,120,87,.12);
+    }
+
+    .versebox:before{
+      content:"“";
+      position:absolute;
+      left:18px;
+      top:-38px;
+      font-family:Cinzel,serif;
+      font-size:9rem;
+      opacity:.10;
+      color:#10b981;
+    }
+
+    .verse{
+      position:relative;
+      font-size:clamp(1.25rem,2.7vw,1.85rem);
+      line-height:1.8;
+      font-weight:500;
+      white-space:pre-wrap;
+    }
+
+    .ref{
+      margin-top:20px;
+      color:var(--gold);
+      font-weight:900;
+      font-size:1.1rem;
+    }
+
+    .note{
+      margin-top:8px;
+      color:var(--muted);
+      font-size:.9rem;
+    }
+
+    .row{
+      display:flex;
+      justify-content:center;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:17px;
+    }
+
+    .status{
+      margin-top:12px;
+      min-height:1.3em;
+      color:var(--muted);
+      font-size:.9rem;
+    }
+
+    footer{
+      padding:19px 24px;
+      text-align:center;
+      border-top:1px solid var(--border);
+      color:var(--muted);
+      font-size:.9rem;
+      line-height:1.6;
+    }
+
+    @media(max-width:640px){
+      .wrap{padding:10px}
+      .app{border-radius:26px;min-height:96vh}
+      header{padding:17px;align-items:flex-start}
+      .brand span{display:none}
+      .ghost{padding:10px 11px;font-size:.85rem}
+      main{padding:34px 18px}
+      .versebox{padding:28px 20px}
+      footer{font-size:.82rem}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="stars"></div>
+  <div class="stars2"></div>
+  <div class="glow"></div>
+  <div class="glow two"></div>
+  <div class="particles" id="particles"></div>
+
+  <div class="wrap">
+    <section class="app">
+      <header>
+        <div class="brand">
+          <div class="logo">🕊️</div>
+          <span>Palavra do Céu</span>
+        </div>
+
+        <div class="toolbar">
+          <button class="ghost" id="themeBtn" type="button">🌙 Modo</button>
+          <button class="ghost" id="soundBtn" type="button">🎧 Ambiente</button>
+        </div>
+      </header>
+
+      <main>
+        <section class="screen" id="home">
+          <div class="pill">🎁 Você ganhou um presente</div>
+          <h1>Receba uma Palavra de Deus para sua vida</h1>
+          <p class="lead">
+            Toque abaixo e receba uma Palavra para meditar, descansar o coração
+            e lembrar que Deus continua cuidando de você.
+          </p>
+          <button class="mainbtn" id="verseBtn" type="button">✨ TOQUE AQUI ✨</button>
+          <div class="status">Funciona sem API, sem internet e sem travar.</div>
+        </section>
+
+        <section class="screen hidden" id="verseScreen">
+          <div class="pill">📖 Palavra para hoje</div>
+          <h1 style="font-size:clamp(2rem,4.5vw,3.45rem)">Deus fala com você</h1>
+
+          <div class="versebox">
+            <div class="verse" id="verseText"></div>
+            <div class="ref" id="verseRef"></div>
+            <div class="note" id="verseNote"></div>
+          </div>
+
+          <div class="row">
+            <button class="mainbtn" id="anotherBtn" type="button">Receber outra Palavra ✨</button>
+            <button class="ghost" id="shareBtn" type="button">Compartilhar 💚</button>
+            <button class="ghost" id="copyBtn" type="button">Copiar 📋</button>
+          </div>
+
+          <div class="status" id="status"></div>
+        </section>
+      </main>
+
+      <footer>
+        “A tua palavra é lâmpada que ilumina os meus passos e luz que clareia o meu caminho.”
+      </footer>
+    </section>
+  </div>
+
+<script>
+const palavras = [
+  {t:"O Senhor é o meu pastor; de nada terei falta.", r:"Salmos 23:1"},
+  {t:"Entregue o seu caminho ao Senhor; confie nele, e ele agirá.", r:"Salmos 37:5"},
+  {t:"O Senhor é a minha luz e a minha salvação; de quem terei temor?", r:"Salmos 27:1"},
+  {t:"Deus é o nosso refúgio e a nossa fortaleza, auxílio sempre presente na adversidade.", r:"Salmos 46:1"},
+  {t:"Consagre ao Senhor tudo o que você faz, e os seus planos serão bem-sucedidos.", r:"Provérbios 16:3"},
+  {t:"Confie no Senhor de todo o seu coração e não se apoie em seu próprio entendimento.", r:"Provérbios 3:5"},
+  {t:"Não temas, pois estou com você; não tenha medo, pois sou o seu Deus.", r:"Isaías 41:10"},
+  {t:"Os que esperam no Senhor renovarão as suas forças.", r:"Isaías 40:31"},
+  {t:"Eu sei os planos que tenho para vocês, planos de fazê-los prosperar e não de lhes causar dano.", r:"Jeremias 29:11"},
+  {t:"Venham a mim, todos os que estão cansados e sobrecarregados, e eu lhes darei descanso.", r:"Mateus 11:28"},
+  {t:"Busquem, pois, em primeiro lugar o Reino de Deus e a sua justiça.", r:"Mateus 6:33"},
+  {t:"Porque para Deus nada é impossível.", r:"Lucas 1:37"},
+  {t:"Deixo-lhes a paz; a minha paz lhes dou.", r:"João 14:27"},
+  {t:"No mundo vocês terão aflições; contudo, tenham ânimo! Eu venci o mundo.", r:"João 16:33"},
+  {t:"Sabemos que Deus age em todas as coisas para o bem daqueles que o amam.", r:"Romanos 8:28"},
+  {t:"Se Deus é por nós, quem será contra nós?", r:"Romanos 8:31"},
+  {t:"O amor é paciente, o amor é bondoso.", r:"1 Coríntios 13:4"},
+  {t:"Vivemos por fé, e não pelo que vemos.", r:"2 Coríntios 5:7"},
+  {t:"Tudo posso naquele que me fortalece.", r:"Filipenses 4:13"},
+  {t:"Não andem ansiosos por coisa alguma, mas apresentem seus pedidos a Deus.", r:"Filipenses 4:6"},
+  {t:"A paz de Deus, que excede todo o entendimento, guardará o coração e a mente de vocês.", r:"Filipenses 4:7"},
+  {t:"O meu Deus suprirá todas as necessidades de vocês.", r:"Filipenses 4:19"},
+  {t:"Lancem sobre ele toda a sua ansiedade, porque ele tem cuidado de vocês.", r:"1 Pedro 5:7"},
+  {t:"Aproximem-se de Deus, e ele se aproximará de vocês.", r:"Tiago 4:8"},
+  {t:"O Senhor é bom, um refúgio em tempos de angústia.", r:"Naum 1:7"},
+  {t:"Ainda que eu ande pelo vale da sombra da morte, não temerei perigo algum, pois tu estás comigo.", r:"Salmos 23:4"},
+  {t:"O choro pode persistir uma noite, mas de manhã irrompe a alegria.", r:"Salmos 30:5"},
+  {t:"Cria em mim um coração puro, ó Deus, e renova dentro de mim um espírito estável.", r:"Salmos 51:10"},
+  {t:"Aquietem-se e saibam que eu sou Deus.", r:"Salmos 46:10"},
+  {t:"O Senhor está perto dos que têm o coração quebrantado.", r:"Salmos 34:18"},
+  {t:"Tu és o meu abrigo e o meu escudo; e na tua palavra coloquei a minha esperança.", r:"Salmos 119:114"},
+  {t:"A tua palavra é lâmpada que ilumina os meus passos e luz que clareia o meu caminho.", r:"Salmos 119:105"},
+  {t:"O coração do homem pode fazer planos, mas a resposta certa vem do Senhor.", r:"Provérbios 16:1"},
+  {t:"Acima de tudo, guarde o seu coração, pois dele depende toda a sua vida.", r:"Provérbios 4:23"},
+  {t:"O nome do Senhor é uma torre forte; os justos correm para ela e estão seguros.", r:"Provérbios 18:10"},
+  {t:"Não fui eu que lhe ordenei? Seja forte e corajoso!", r:"Josué 1:9"},
+  {t:"O Senhor lutará por vocês; tão somente acalmem-se.", r:"Êxodo 14:14"},
+  {t:"As misericórdias do Senhor são a causa de não sermos consumidos.", r:"Lamentações 3:22"},
+  {t:"Grande é a tua fidelidade.", r:"Lamentações 3:23"},
+  {t:"O justo viverá pela sua fé.", r:"Habacuque 2:4"},
+  {t:"Peçam, e lhes será dado; busquem, e encontrarão; batam, e a porta lhes será aberta.", r:"Mateus 7:7"},
+  {t:"Felizes os que choram, pois serão consolados.", r:"Mateus 5:4"},
+  {t:"Felizes os puros de coração, pois verão a Deus.", r:"Mateus 5:8"},
+  {t:"Onde estiver o seu tesouro, aí também estará o seu coração.", r:"Mateus 6:21"},
+  {t:"Eu sou o caminho, a verdade e a vida.", r:"João 14:6"},
+  {t:"Eu vim para que tenham vida, e a tenham plenamente.", r:"João 10:10"},
+  {t:"Permaneçam em mim, e eu permanecerei em vocês.", r:"João 15:4"},
+  {t:"O Senhor é fiel; ele os fortalecerá e os guardará do Maligno.", r:"2 Tessalonicenses 3:3"},
+  {t:"Porque Deus não nos deu espírito de covardia, mas de poder, de amor e de equilíbrio.", r:"2 Timóteo 1:7"},
+  {t:"Jesus Cristo é o mesmo, ontem, hoje e para sempre.", r:"Hebreus 13:8"},
+  {t:"A fé é a certeza daquilo que esperamos e a prova das coisas que não vemos.", r:"Hebreus 11:1"},
+  {t:"Toda boa dádiva e todo dom perfeito vêm do alto.", r:"Tiago 1:17"},
+  {t:"Se algum de vocês tem falta de sabedoria, peça-a a Deus.", r:"Tiago 1:5"},
+  {t:"O amor cobre multidão de pecados.", r:"1 Pedro 4:8"},
+  {t:"Deus é amor.", r:"1 João 4:8"},
+  {t:"Esta é a confiança que temos ao nos aproximarmos de Deus: se pedirmos alguma coisa de acordo com a vontade de Deus, ele nos ouvirá.", r:"1 João 5:14"},
+  {t:"Eis que estou à porta e bato.", r:"Apocalipse 3:20"},
+  {t:"O Senhor te abençoe e te guarde.", r:"Números 6:24"},
+  {t:"O Senhor faça resplandecer o seu rosto sobre ti e te conceda graça.", r:"Números 6:25"}
+];
+
+let ultimoIndice = -1;
+let ultimaPalavra = null;
+let audioCtx = null;
+let tocando = false;
+let audioNodes = [];
+
+document.addEventListener("DOMContentLoaded", iniciar);
+
+function iniciar(){
+  aplicarTemaAutomatico();
+  criarParticulas();
+
+  document.getElementById("themeBtn").addEventListener("click", alternarTema);
+  document.getElementById("soundBtn").addEventListener("click", alternarSom);
+  document.getElementById("verseBtn").addEventListener("click", mostrarPalavra);
+  document.getElementById("anotherBtn").addEventListener("click", mostrarPalavra);
+  document.getElementById("shareBtn").addEventListener("click", compartilhar);
+  document.getElementById("copyBtn").addEventListener("click", copiar);
+}
+
+function aplicarTemaAutomatico(){
+  try{
+    const escuro = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+    document.body.classList.toggle("dark", escuro);
+  }catch(e){}
+}
+
+function alternarTema(){
+  document.body.classList.toggle("dark");
+}
+
+function criarParticulas(){
+  const area = document.getElementById("particles");
+  for(let i=0;i<58;i++){
+    const p = document.createElement("span");
+    p.className = "particle";
+    p.style.left = Math.random()*100 + "%";
+    p.style.animationDuration = (12 + Math.random()*22) + "s";
+    p.style.animationDelay = (-Math.random()*22) + "s";
+    const s = 3 + Math.random()*7;
+    p.style.width = s + "px";
+    p.style.height = s + "px";
+    p.style.opacity = .18 + Math.random()*.55;
+    area.appendChild(p);
+  }
+}
+
+function mostrarPalavra(){
+  document.getElementById("home").classList.add("hidden");
+  document.getElementById("verseScreen").classList.remove("hidden");
+
+  let indice;
+  do{
+    indice = Math.floor(Math.random() * palavras.length);
+  }while(indice === ultimoIndice && palavras.length > 1);
+
+  ultimoIndice = indice;
+  ultimaPalavra = palavras[indice];
+
+  document.getElementById("verseText").innerText = "“" + ultimaPalavra.t + "”";
+  document.getElementById("verseRef").innerText = ultimaPalavra.r;
+  document.getElementById("verseNote").innerText = "Palavra selecionada para meditação.";
+  document.getElementById("status").innerText = "";
+}
+
+function textoCompartilhar(){
+  if(!ultimaPalavra) return "";
+  return "📖 “" + ultimaPalavra.t + "”\n\n" + ultimaPalavra.r + "\n\nReceba uma Palavra de Deus para sua vida.";
+}
+
+function compartilhar(){
+  const texto = textoCompartilhar();
+  if(!texto) return;
+
+  if(navigator.share){
+    navigator.share({title:"Palavra de Deus para sua vida", text:texto}).catch(function(){ abrirWhatsApp(texto); });
+  }else{
+    abrirWhatsApp(texto);
+  }
+}
+
+function abrirWhatsApp(texto){
+  window.open("https://wa.me/?text=" + encodeURIComponent(texto), "_blank");
+}
+
+function copiar(){
+  const texto = textoCompartilhar();
+  if(!texto) return;
+
+  if(navigator.clipboard && window.isSecureContext){
+    navigator.clipboard.writeText(texto).then(function(){
+      document.getElementById("status").innerText = "Palavra copiada 💚";
+    }).catch(function(){
+      copiaAlternativa(texto);
+    });
+  }else{
+    copiaAlternativa(texto);
+  }
+}
+
+function copiaAlternativa(texto){
+  const area = document.createElement("textarea");
+  area.value = texto;
+  area.style.position = "fixed";
+  area.style.left = "-9999px";
+  document.body.appendChild(area);
+  area.focus();
+  area.select();
+
+  try{
+    document.execCommand("copy");
+    document.getElementById("status").innerText = "Palavra copiada 💚";
+  }catch(e){
+    document.getElementById("status").innerText = "Não consegui copiar automaticamente.";
+  }
+
+  document.body.removeChild(area);
+}
+
+/*
+  SOM AMBIENTE:
+  O iPhone só permite tocar som depois de um toque do usuário.
+  Por isso o botão Ambiente liga/desliga o pad.
+  Não existe som no botão de versículo.
+*/
+async function alternarSom(){
+  if(tocando){
+    pararSom();
+  }else{
+    iniciarSom();
+  }
+}
+
+async function iniciarSom(){
+  try{
+    audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+
+    if(audioCtx.state === "suspended"){
+      await audioCtx.resume();
+    }
+
+    const master = audioCtx.createGain();
+    master.gain.value = 0.018;
+    master.connect(audioCtx.destination);
+
+    const freqs = [196, 246.94, 293.66, 392, 493.88];
+
+    audioNodes = freqs.map(function(freq, i){
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      const filter = audioCtx.createBiquadFilter();
+
+      osc.type = "sine";
+      osc.frequency.value = freq;
+      filter.type = "lowpass";
+      filter.frequency.value = 520;
+
+      gain.gain.value = 0.0001;
+
+      osc.connect(filter);
+      filter.connect(gain);
+      gain.connect(master);
+
+      osc.start();
+      gain.gain.exponentialRampToValueAtTime(0.030/(i+1), audioCtx.currentTime + 1.5);
+
+      return {osc,gain};
+    });
+
+    tocando = true;
+    document.getElementById("soundBtn").innerText = "🔇 Parar";
+  }catch(e){
+    alert("O navegador bloqueou o áudio. No iPhone, toque de novo em Ambiente pelo link do GitHub Pages.");
+  }
+}
+
+function pararSom(){
+  if(!audioCtx) return;
+
+  audioNodes.forEach(function(n){
+    try{
+      n.gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + .6);
+      n.osc.stop(audioCtx.currentTime + .8);
+    }catch(e){}
+  });
+
+  audioNodes = [];
+  tocando = false;
+  document.getElementById("soundBtn").innerText = "🎧 Ambiente";
+}
+</script>
+</body>
+</html>
